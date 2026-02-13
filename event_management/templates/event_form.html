@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="container-fluid">
+    <div class="card shadow-lg border-0 rounded-4 p-4">
+
+        <h2 class="fw-bold mb-4">{{ form_title }}</h2>
+
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Event Title</label>
+                    {{ form.title }}
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Event Date</label>
+                    {{ form.event_date }}
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Location</label>
+                {{ form.location }}
+            </div>
+            
+            <div class="mb-3">
+                <label class="form-label">Description</label>
+                {{ form.description }}
+            </div>
+            
+            <div class="mb-3">
+                <label class="form-label">Event Image</label>
+                {{ form.image }}
+                <img id="preview" style="display:none; margin-top:10px; max-width:200px;" />
+            </div>
+
+            <button type="submit" class="btn btn-primary px-4 py-2 rounded-pill">
+                Save Event
+            </button>
+             <a href="{% url 'event_list' %}" class="btn btn-secondary">
+        Cancel
+    </a>
+
+        </form>
+
+    </div>
+</div>
+
+<script>
+    document.getElementById("id_image").onchange = function (event) {
+        const reader = new FileReader();
+        reader.onload = function(){
+        const img = document.getElementById("preview");
+        img.src = reader.result;
+        img.style.display = "block";
+    };
+    reader.readAsDataURL(event.target.files[0]);
+};
+</script>
+
+
+{% endblock %}

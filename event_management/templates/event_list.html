@@ -1,0 +1,120 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="d-flex justify-content-between">
+<h2 class="mb-2 text-primary">All Events</h2>
+
+<a href="{% url 'event_add' %}" class="btn btn-primary mb-3">
+    + Add Event
+</a>
+</div>
+<!-- Search -->
+ <form method="GET" class="mb-4">
+    <div class="input-group">
+        <input type="text" name="q"
+               class="form-control"
+               placeholder="Search events..."
+               value="{{ request.GET.q }}">
+        <button class="btn btn-primary">Search</button>
+    </div>
+</form>
+
+<!-- Stats -->
+<!-- <div class="row mb-4">
+    <div class="col-md-6">
+        <div class="card shadow p-3 text-center">
+            <h3>{{ total }}</h3>
+            <p>Total Events</p>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card shadow p-3 text-center">
+            <h3>{{ upcoming }}</h3>
+            <p>Upcoming Events</p>
+        </div>
+    </div>
+</div> -->
+<div class="row mb-4">
+    <div class="col-md-6">
+        <div class="card text-white shadow-sm p-3"
+             style="background: linear-gradient(45deg,#4e73df,#224abe);">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <h4 class="mb-0">{{ total }}</h4>
+                    <small>Total Events</small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="card text-white shadow-sm p-3"
+             style="background: linear-gradient(45deg,#1cc88a,#13855c);">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <h4 class="mb-0">{{ upcoming }}</h4>
+                    <small>Upcoming Events</small>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Event Cards -->
+<div class="row">
+    {% for event in events %}
+    <div class="col-md-4 mb-2">
+        <div class="card shadow-sm h-100">
+
+            {% if event.image %}
+            <img src="{{ event.image.url }}"
+                 class="card-img-top"
+                 style="height:180px; object-fit:cover;">
+            {% endif %}
+
+            <div class="card-body">
+                <h5 class="fw-bold">{{ event.title }}</h5>
+                <p class="text-muted mb-1">{{ event.location }}</p>
+                <p class="text-muted">{{ event.event_date }}</p>
+
+                <a href="{% url 'event_edit' event.id %}"
+                   class="btn btn-warning btn-sm">
+                    Edit
+                </a>
+
+                <a href="{% url 'event_delete' event.id %}"
+                   class="btn btn-danger btn-sm"
+                   onclick="return confirm('Are you sure you want to delete this event?');">
+                    Delete
+                </a>
+            </div>
+
+        </div>
+    </div>
+    {% endfor %}
+</div>
+<nav>
+    <ul class="pagination justify-content-center">
+        {% if events.has_previous %}
+        <li class="page-item">
+            <a class="page-link" href="?page={{ events.previous_page_number }}">Previous</a>
+        </li>
+        {% endif %}
+
+        <li class="page-item active">
+            <span class="page-link">
+                {{ events.number }}
+            </span>
+        </li>
+
+        {% if events.has_next %}
+        <li class="page-item">
+            <a class="page-link" href="?page={{ events.next_page_number }}">Next</a>
+        </li>
+        {% endif %}
+    </ul>
+</nav>
+
+{% endblock %}

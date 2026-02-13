@@ -1,0 +1,71 @@
+body {
+    font-family: 'Segoe UI', sans-serif;
+}
+
+.sidebar {
+    width: 250px;
+    height: 100vh;
+    background: linear-gradient(180deg, #4e73df, #224abe);
+}
+
+.menu-item {
+    display: block;
+    padding: 10px;
+    color: white;
+    text-decoration: none;
+}
+
+.menu-item:hover {
+    background: rgba(255,255,255,0.1);
+    border-radius: 5px;
+}
+
+.content {
+    flex: 1;
+    background-color: #f8f9fc;
+}
+
+.btn-gradient {
+    background: linear-gradient(45deg, #4e73df, #224abe);
+    color: white;
+    border: none;
+}
+
+.login-bg {
+    background: linear-gradient(135deg, #4e73df, #224abe);
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-page {
+    background: url("/static/images/login-bg.jpg") no-repeat center center/cover;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-card {
+    background: rgba(255,255,255,0.85);
+    /* backdrop-filter: blur(10px); */
+    padding: 40px;
+    width: 400px;
+    border-radius: 15px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+}
+
+.card {
+    background: #ffffff;
+}
+
+.form-control {
+    border-radius: 10px;
+    padding: 10px;
+}
+
+.btn-primary {
+    background: linear-gradient(45deg, #4e73df, #224abe);
+    border: none;
+}
