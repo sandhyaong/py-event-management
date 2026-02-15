@@ -20,9 +20,9 @@
 </a>
 
     <div class="ms-auto">
-        <a href="{% url 'login' %}" class="btn btn-outline-light">
-            Login
-        </a>
+    <a href="{% url 'login' %}" class="btn btn-primary me-2">
+        Login
+    </a>
     </div>
 </nav>
 
@@ -33,15 +33,16 @@
     <div class="container">
         <h1 class="display-4 fw-bold">Create & Manage Events Seamlessly</h1>
         <!-- <p class="lead mt-3">Professional event management dashboard built with Django</p> -->
+    <a href="{% url 'register' %}" class="btn btn-primary btn-lg mt-4 px-5">
+        Get Started
+    </a>
 
-        <a href="{% url 'login' %}" class="btn btn-primary btn-lg mt-4 px-5">
-            Get Started
-        </a>
     </div>
+</section>
     <!-- 🔥 Featured Slider -->
-<section class="container my-5">
+<section class="container my-3">
 
-    <h2 class="text-center fw-bold mb-4">Upcoming Highlights</h2>
+    <h2 class="text-center fw-bold mb-4 text-gradient2">Upcoming Highlights</h2>
 
     <div id="eventCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel" data-bs-interval="2500">
 
@@ -76,14 +77,12 @@
     </div>
 
 </section>
-</section>
-
 
 <!-- 🔥 FEATURED EVENTS -->
 <section class="py-5 bg-light">
     <div class="container">
 
-        <h2 class="text-center mb-5 fw-bold">Featured Events</h2>
+        <h2 class="text-center mb-5 fw-bold text-gradient2">Featured Events</h2>
 
         <div class="row">
 

@@ -81,7 +81,7 @@ body {
 }
 /* landingPage */
 .hero-section {
-    height: 90vh;
+    height: 50vh;
     background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
                 url("/static/images/event2.jpg") center/cover no-repeat;
     display: flex;
@@ -99,6 +99,12 @@ body {
 }
 .text-gradient1{
       background: linear-gradient(45deg, #df924e, #1cc88a);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 700; 
+}
+.text-gradient2{
+      background: linear-gradient(45deg,  #4e73df, #1cc88a);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     font-weight: 700; 

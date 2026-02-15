@@ -20,7 +20,16 @@
         <h4 class="text-white">Event Admin</h4>
         <hr>
         <a href="{% url 'event_list' %}" class="menu-item">All Events</a>
+        {% if request.user.user_role.role == "ADMIN" %}
         <a href="{% url 'event_add' %}" class="menu-item">Add Event</a>
+          {% endif %}
+        <!-- Role -->
+        {% if request.user.user_role.role == "ADMIN" %}
+            <a href="{% url 'manage_roles' %}" class="menu-item">
+                Manage Roles
+            </a>
+            {% endif %}
+
         <!-- <a href="{% url 'logout' %}" class="menu-item">Logout</a> -->
              <div class="mt-auto">
         <hr class="bg-light">

@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h3 class="mb-4">Manage Roles</h3>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>User</th>
+            <th>Current Role</th>
+            <th>Change Role</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for user in users %}
+        <tr>
+            <td>{{ user.username }}</td>
+            <td>{{ user.user_role.role }}</td>
+            <td>
+                <form method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" name="user_id" value="{{ user.id }}">
+
+                <select name="role" class="form-select d-inline w-auto">
+
+                    <option value="ADMIN"
+                        {% if user.user_role.role == "ADMIN" %}selected{% endif %}>
+                        Admin
+                    </option>
+
+                    <option value="MANAGER"
+                        {% if user.user_role.role == "MANAGER" %}selected{% endif %}>
+                        Manager
+                    </option>
+
+                    <option value="VIEWER"
+                        {% if user.user_role.role == "VIEWER" %}selected{% endif %}>
+                        Viewer
+                    </option>
+
+                    </select>
+
+                    <button class="btn btn-primary btn-sm">
+                        Update
+                    </button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}
