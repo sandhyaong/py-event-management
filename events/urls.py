@@ -22,10 +22,10 @@ from rest_framework_simplejwt.views import (
     TokenRefreshView,
 )
 
-path('api/token/', TokenObtainPairView.as_view()),
-path('api/token/refresh/', TokenRefreshView.as_view()),
 
 urlpatterns = [
-    # path('admin/', admin.site.urls),
     path('', include('event_management.urls')),
+path('api/token/refresh/', TokenRefreshView.as_view()),
+path('api/token/', TokenObtainPairView.as_view()),
+    # path('admin/', admin.site.urls),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

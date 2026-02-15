@@ -5,6 +5,9 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from datetime import date
+from django.utils import timezone
+
+
 
 # def event_list(request):
 #     events = Event.objects.all()
@@ -84,6 +87,7 @@ def edit_event(request, id):
     form = EventForm(request.POST or None, instance=event)
     if form.is_valid():
         form.save()
+        messages.success(request, "Event Updated Successfully!")
         return redirect('event_list')
     return render(request, 'event_form.html', {'form': form, 'form_title': 'Edit Event'})
 
@@ -91,4 +95,23 @@ def edit_event(request, id):
 def delete_event(request, id):
     event = Event.objects.get(id=id)
     event.delete()
+    messages.success(request, "Event Deleted Successfully!")
     return redirect('event_list')
+
+# Landing page
+# def landing_page(request):
+#     featured_events = Event.objects.all()[:3]
+#     return render(request, "landing.html", {
+#         "featured_events": featured_events
+#     })
+def landing_page(request):
+    upcoming_events = Event.objects.filter(
+        event_date__gte=timezone.now()
+    ).order_by('event_date')
+
+    featured_events = Event.objects.all().order_by('-id')[:3]
+
+    return render(request, 'landing.html', {
+        'events': upcoming_events,
+        'featured_events': featured_events
+    })

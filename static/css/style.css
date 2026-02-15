@@ -2,11 +2,21 @@ body {
     font-family: 'Segoe UI', sans-serif;
 }
 
-.sidebar {
+ .sidebar {
     width: 250px;
-    height: 100vh;
     background: linear-gradient(180deg, #4e73df, #224abe);
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
 }
+
+.content {
+    margin-left: 250px;
+    padding: 20px;
+    min-height: 100vh;
+}
+
 
 .menu-item {
     display: block;
@@ -68,4 +78,28 @@ body {
 .btn-primary {
     background: linear-gradient(45deg, #4e73df, #224abe);
     border: none;
+}
+/* landingPage */
+.hero-section {
+    height: 90vh;
+    background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
+                url("/static/images/event2.jpg") center/cover no-repeat;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: white;
+}
+/* Logo */
+.text-gradient {
+    background: linear-gradient(45deg, #4e73df, #1cc88a);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 700;
+}
+.text-gradient1{
+      background: linear-gradient(45deg, #df924e, #1cc88a);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 700; 
 }
