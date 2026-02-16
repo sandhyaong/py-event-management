@@ -67,7 +67,7 @@
 <div class="row">
     {% for event in events %}
     <div class="col-md-4 mb-2">
-        <div class="card shadow-sm h-100">
+        <div class="card shadow-sm h-100" id="card-{{ event.id }}">
 
             {% if event.image %}
             <img src="{{ event.image.url }}"
@@ -119,9 +119,15 @@
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
           Cancel
         </button>
-        <a href="{% url 'event_delete' event.id %}" class="btn btn-danger">
+        <!-- <a href="{% url 'event_delete' event.id %}" class="btn btn-danger">
           Yes, Delete
-        </a>
+        </a> -->
+       <button type="button"
+            class="btn btn-danger"
+            onclick="deleteEvent(`{% url 'event_delete' event.id %}`, 'card-{{ event.id }}')"
+            data-bs-dismiss="modal">
+             Yes, Delete
+            </button>
       </div>
     </div>
   </div>

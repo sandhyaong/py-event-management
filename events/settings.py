@@ -11,9 +11,6 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
 from pathlib import Path
-import os
-import dj_database_url
-
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -23,14 +20,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-# SECRET_KEY = '2tev3+xf%9o9xome1idu4u%$u#265oras%q%)u38hn9tp#t)#n'
-SECRET_KEY = os.environ.get('2tev3+xf%9o9xome1idu4u%$u#265oras%q%)u38hn9tp#t)#n')
-
+SECRET_KEY = '2tev3+xf%9o9xome1idu4u%$u#265oras%q%)u38hn9tp#t)#n'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = [ 'localhost','127.0.0.1','.onrender.com']
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -59,7 +54,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'event_management.middleware.RoleBasedAccessMiddleware',
+    # 'event_management.middleware.RoleBasedAccessMiddleware',
 ]
 
 ROOT_URLCONF = 'events.urls'
@@ -87,17 +82,14 @@ WSGI_APPLICATION = 'events.wsgi.application'
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
 DATABASES = {
-    #  'default': {
-    #     'ENGINE': 'django.db.backends.postgresql',
-    #     'NAME': 'event_db',
-    #     'USER': 'postgres',
-    #     'PASSWORD': 'postgres',
-    #     'HOST': '127.0.0.1',
-    #     'PORT': '5432',
-    # }
-    'default': dj_database_url.config(
-        default=os.environ.get('DATABASE_URL')
-    )
+     'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'event_db',
+        'USER': 'postgres',
+        'PASSWORD': 'postgres',
+        'HOST': '127.0.0.1',
+        'PORT': '5432',
+    }
 }
 
 
@@ -138,10 +130,6 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = BASE_DIR / 'staticfiles'
-
-MIDDLEWARE.insert(1, 'whitenoise.middleware.WhiteNoiseMiddleware')
-
 STATICFILES_DIRS = [
     BASE_DIR / "static",
 ]
