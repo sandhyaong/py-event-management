@@ -1,17 +1,8 @@
-from django import forms
+from django import forms  # <--- This line is missing!
 from .models import Event
+from django.contrib.auth.models import User
+from django.contrib.auth.forms import UserCreationForm
 
-# class EventForm(forms.ModelForm):
-#     class Meta:
-#         model = Event
-#         fields = '__all__'
-#         widgets = {
-#             'event_date': forms.DateInput(attrs={
-#                 'type': 'date',
-#                 'class': 'form-control'
-#             }),
-#         }
-# NEw
 class EventForm(forms.ModelForm):
     class Meta:
         model = Event
@@ -19,17 +10,15 @@ class EventForm(forms.ModelForm):
         widgets = {
             'title': forms.TextInput(attrs={'class': 'form-control'}),
             'location': forms.TextInput(attrs={'class': 'form-control'}),
-            'description': forms.Textarea(attrs={'class': 'form-control'}),
+            'description': forms.Textarea(attrs={'class': 'form-control', 'rows': 4}),
             'event_date': forms.DateInput(attrs={
                 'type': 'date',
                 'class': 'form-control'
             }),
+            'image': forms.ClearableFileInput(attrs={'class': 'form-control'}),
         }
-        # Register
-from django.contrib.auth.models import User
-from django.contrib.auth.forms import UserCreationForm
 
 class RegisterForm(UserCreationForm):
     class Meta:
         model = User
-        fields = ['username', 'email', 'password1', 'password2']
+        fields = ['username', 'email'] # UserCreationForm handles passwords internally

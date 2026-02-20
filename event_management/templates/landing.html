@@ -1,264 +1,365 @@
 {% load static %}
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>EventPro | Premium Event Management</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Events | Making Events Simpler</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Playfair+Display:ital,wght@1,400&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
 
+    <style>
+        :root { --dv-orange: #ff4e00; --dv-dark: #1a1a1a; --dv-grey: #666; }
+         :root { --dvents-orange: #ff4e00; --dvents-dark: #1a1a1a; --dvents-grey: #666; }
+
+        body { font-family: 'Open Sans', sans-serif; color: var(--dvents-grey); overflow-x: hidden; }
+        h1, h2, h3, .navbar-brand { font-family: 'Montserrat', sans-serif; color: var(--dvents-dark); text-transform: uppercase; }
+        .italic-sub { font-family: 'Playfair Display', serif; font-style: italic; color: white; text-transform: capitalize; font-size: 1.4rem; }
+
+        /* --- Navbar --- */
+        .navbar { background: white; border-bottom: 1px solid #eee; }
+        .nav-link { color: var(--dvents-dark) !important; font-weight: 700; font-size: 0.85rem; letter-spacing: 1px; margin: 0 10px; }
+        .nav-link:hover { color: var(--dvents-orange) !important; }
+        .login{
+            color:#ff3800;
+        }
+        /* --- Hero Slider --- */
+        .hero-slider { height: 100vh; position: relative; overflow: hidden;}
+        .carousel-item { height: 100vh; background-size: cover; background-position: center; transition: transform 5s ease-in-out;}
+        /* Ken Burns Effect: Zooms image while active */
+        .carousel-item.active { animation: kenburns 10s forwards; }
+        @keyframes kenburns {
+            from { transform: scale(1); }
+            to { transform: scale(1.1); }
+        }
+        .carousel-overlay { 
+            background: rgba(0,0,0,0.4); 
+            height: 100%; width: 100%; 
+            display: flex; align-items: center; 
+        }
+        /* --- Custom Arrows (Feature 2) --- */
+        .carousel-control-prev, .carousel-control-next { 
+            width: 45px; height: 45px; background: rgba(0,0,0,0.3); 
+            border-radius: 50%; top: 50%; transform: translateY(-50%); opacity: 1; margin: 0 20px;
+        }
+        .carousel-control-prev:hover, .carousel-control-next:hover { background: var(--dv-orange); }
+        /* Faster Transition */
+.carousel-item { 
+    transition: transform 0.8s ease-in-out, opacity 0.8s ease-in-out !important; 
+}
+
+/* Floating Icons from Image 1 */
+.floating-icon-1 {
+    position: absolute;
+    top: 20%;
+    left: 10%;
+    width: 60px;
+    z-index: 5;
+    animation: float 3s ease-in-out infinite;
+}
+
+.floating-icon-2 {
+    position: absolute;
+    bottom: 30%;
+    right: 15%;
+    width: 50px;
+    z-index: 5;
+    animation: float 4s ease-in-out infinite reverse;
+}
+
+@keyframes float {
+    0% { transform: translateY(0px) rotate(0deg); }
+    50% { transform: translateY(-20px) rotate(10deg); }
+    100% { transform: translateY(0px) rotate(0deg); }
+}
+
+/* Custom Arrow Style */
+.carousel-control-prev, .carousel-control-next {
+    z-index: 10;
+    opacity: 1;
+}
+        /* --- Team Section (Image 2) --- */
+        .team-section { background: url('https://images.unsplash.com/photo-1492684223066-81342ee5ff30?q=80&w=2070') center/cover fixed; position: relative; padding: 100px 0; color: white; }
+        .team-overlay { position: absolute; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.85); }
+        .team-card { background: transparent; border: none; color: white; }
+        .team-img { width: 150px; height: 150px; object-fit: cover; border: 4px solid var(--dv-orange); margin-bottom: 20px; }
+        .team-line { width: 40px; height: 3px; background: var(--dv-orange); display: inline-block; margin-right: 10px; vertical-align: middle; }
+
+        /* --- Gallery Filter (Image 4) --- */
+        .gallery-nav .nav-link { color: var(--dv-grey); font-weight: 700; font-size: 0.75rem; border: none; background: none; text-transform: uppercase; }
+        .gallery-nav .nav-link.active { color: var(--dv-orange); border-bottom: 2px solid var(--dv-orange); }
+        .gallery-item img { width: 100%; height: 300px; object-fit: cover; transition: 0.5s; }
+        .gallery-item { overflow: hidden; padding: 0; }
+        .gallery-item:hover img { transform: scale(1.1); filter: brightness(0.7); }
+
+        /* Text Animation Classes */
+        .animate-up { animation: fadeInUp; animation-duration: 1s; }
+        .animate-delay-1 { animation-delay: 0.5s; }
+        .animate-delay-2 { animation-delay: 1s; }
+
+        .hero-title { font-size: 4.5rem; color: white; font-weight: 800; line-height: 1; margin-top: 15px; }
+        .btn-orange { 
+            background: var(--dvents-orange); color: white; border-radius: 20px; 
+            padding: 10px 20px; font-weight: 700; text-transform: uppercase; border: none;
+            transition: 0.3s;
+        }
+        .btn-orange:hover { background: #e64600; color: white; transform: translateY(-3px); }
+
+        /* --- Estimate Ribbon --- */
+       /* --- Estimate Ribbon Overlap (Feature 3) --- */
+        .estimate-ribbon {
+            background: var(--dvents-dark);
+            color: white;
+            padding: 40px;
+            margin-top: -100px; /* Pulls it up into the hero */
+            position: relative;
+            z-index: 99;
+            border-bottom: 8px solid var(--dvents-orange);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            /* Creating the V-shape seen in Image 2 */
+            clip-path: polygon(0 0, 100% 0, 100% 90%, 50% 100%, 0 90%);
+        }
+
+        /* --- Welcome Section --- */
+        .welcome-section { padding: 100px 0; }
+        .welcome-title span { color: var(--dvents-orange); }
+        .welcome-img { border-radius: 15px; box-shadow: 20px 20px 0px var(--dvents-orange); }
+
+        /* --- Event Rows --- */
+        .event-card { border: none; transition: 0.4s; margin-bottom: 30px; }
+        .event-card img { height: 250px; object-fit: cover; border-radius: 10px; }
+        .event-card:hover { transform: translateY(-10px); }
+        .event-card .card-title { font-size: 1.2rem; font-weight: 700; margin-top: 15px; }
+
+       /* --- Footer (Image 3) --- */
+        .main-footer { background: var(--dv-dark); color: #ccc; padding: 80px 0 20px; font-size: 0.9rem; }
+        .footer-title { color: white; font-size: 1.1rem; margin-bottom: 30px; position: relative; }
+        .footer-title::before { content: ""; position: absolute; left: -20px; top: 50%; width: 10px; height: 2px; background: var(--dv-orange); }
+        .footer-gallery img { width: 100%; height: 70px; object-fit: cover; margin-bottom: 10px; border-radius: 3px; cursor: pointer; }
+        .quick-links { list-style: none; padding: 0; }
+        .quick-links li { margin-bottom: 12px; }
+        .quick-links a { color: #ccc; text-decoration: none; transition: 0.3s; }
+        .quick-links a:hover { color: var(--dv-orange); padding-left: 5px; }
+    </style>
 </head>
-
 <body>
 
-<!-- 🔥 NAVBAR -->
-<!-- <nav class="navbar navbar-expand-lg navbar-dark bg-dark px-4">
-    <a class="navbar-brand fw-bold d-flex align-items-center" href="/">
-        <span class="text-gradient">EventPro</span>
-        <span class="me-2">🎉</span>
-</a>
-
-    <div class="ms-auto">
-    <a href="{% url 'login' %}" class="btn btn-primary me-2">
-        Login
-    </a>
-    </div>
-</nav> -->
-<nav class="navbar navbar-expand-lg custom-navbar fixed-top px-4">
-    <div class="container-fluid">
-
-        <!-- Logo -->
-        <a class="navbar-brand fw-bold d-flex align-items-center" href="/">
-            <span class="text-gradient">EventPro</span>
-            <span class="ms-2 fs-5">🎉</span>
+<nav class="navbar navbar-expand-lg sticky-top">
+    <div class="container">
+        <a class="navbar-brand d-flex align-items-center" href="#">
+            <img src="https://demo.ovatheme.com/dvents/wp-content/uploads/2017/06/logo.png" alt="Logo" height="40">
         </a>
-
-        <!-- Right Side -->
-        <div class="ms-auto text-gradient">
-            <a href="{% url 'login' %}" class="btn btn-modern">
-                Login
-            </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item"><a class="nav-link" href="#">HOME</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">SERVICES</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">EVENTS</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">ABOUT</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">NEWS</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">CONTACT</a></li>
+                <li class="nav-item"><a class="btn login me-2" href="{% url 'login' %}"><i class="bi bi-person-circle me-2 login"></i></a></li>
+            </ul>
         </div>
-
     </div>
 </nav>
 
-
-<!-- 🔥 HERO SECTION -->
-<section class="hero-section">
-
-    <div class="container">
-        <h1 class="display-4 fw-bold">Create & Manage Events Seamlessly</h1>
-        <p>EventPro is a secure and easy-to-use event management platform that helps you create, organize, and manage events efficiently.
-With role-based access for Admin, Manager, and Viewer, it ensures smooth collaboration while keeping your data protected — all within a clean and modern dashboard.</p>
-    <a href="{% url 'register' %}" class="btn btn-primary btn-lg mt-4 px-5">
-        Get Started
-    </a>
-
-    </div>
-</section>
-<!-- premium -->
- <section class="section-wrapper">
-    <div class="container premium-container">
-        <div class="row align-items-center">
+<div id="heroCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel" data-bs-interval="3000">
+    <div class="carousel-inner">
+        {% for event in featured_events %}
+        <div class="carousel-item {% if forloop.first %}active{% endif %}" style="background-image: url('{{ event.image.url }}');">
+            <img src="{% static 'images/ev-icon2.png' %}" class="floating-icon-1" alt="icon">
+            <img src="{% static 'images/ev-icon1.png' %}" class="floating-icon-2" alt="icon">
             
-            <!-- LEFT CONTENT -->
-            <div class="col-lg-5">
-                <div class="content-box">
-                    <h2 class="section-title">Premier Events</h2>
-                    <p class="section-desc">
-                        We craft unforgettable premium experiences tailored
-                        to elevate your brand presence and audience engagement.
-                    </p>
-
-                    <ul class="section-list">
-                        <li>Luxury Corporate Events</li>
-                        <li>Grand Product Launches</li>
-                        <li>Elite Private Gatherings</li>
-                        <li>High-Impact Brand Activations</li>
-                    </ul>
-                </div>
-            </div>
-
-            <!-- RIGHT IMAGE CAROUSEL -->
-            <div class="col-lg-7">
-                <div id="premierCarousel" class="carousel slide custom-carousel"
-                     data-bs-ride="carousel" data-bs-interval="2500">
-
-                    <div class="carousel-inner rounded-4 overflow-hidden">
-
-                        {% for event in featured_events %}
-                        <div class="carousel-item {% if forloop.first %}active{% endif %}">
-                            <img src="{{ event.image.url }}"
-                                 class="d-block w-100 carousel-img">
-                        </div>
-                        {% endfor %}
-
+            <div class="carousel-overlay">
+                <div class="container">
+                    <div class="col-lg-8">
+                        <p class="italic-sub animate__animated animate__fadeInDown">We are the Event Management Specialists</p>
+                        <h6 class="hero-title animate__animated animate__fadeInLeft animate__delay-1s">
+                            WE PERSONALIZE YOUR <br> <span>{{ event.title }}</span>
+                        </h6>
+                      <div class="mt-4 animate__animated animate__fadeInUp animate__delay-2s">
+                        <a href="{% url 'register' %}" class="btn btn-orange me-3">
+                            Get Started
+                        </a>
                     </div>
 
+                    </div>
                 </div>
             </div>
-
-        </div>
-    </div>
-</section>
-<!-- Our Event -->
- <section class="section-wrapper">
-    <div class="container premium-container">
-
-        <h2 class="text-center section-title mb-5">Our Events</h2>
-
-        {% for event in featured_events %}
-        <div class="row align-items-center event-row mb-5 bg-light-blue">
-
-            {% if forloop.counter|divisibleby:2 %}
-
-                <!-- Image Left -->
-                <div class="col-md-6">
-                    <!-- <div class="image-wrapper">
-                        <img src="{{ event.image.url }}" class="section-img">
-                    </div> -->
-                    <div id="ourCarousel{{ forloop.counter }}" 
-     class="carousel slide image-wrapper" 
-     data-bs-ride="carousel" 
-     data-bs-interval="2500">
-
-    <div class="carousel-inner">
-
-        {% for e in featured_events %}
-        <div class="carousel-item {% if forloop.first %}active{% endif %}">
-            <img src="{{ e.image.url }}" class="section-img">
         </div>
         {% endfor %}
-
     </div>
-
+    <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
+        <i class="bi bi-chevron-left fs-3"></i>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next">
+        <i class="bi bi-chevron-right fs-3"></i>
+    </button>
 </div>
-
+<div class="container">
+    <div class="row justify-content-end">
+        <div class="col-lg-6">
+            <div class="estimate-ribbon animate__animated animate__slideInUp">
+                <div class="row align-items-center">
+                    <div class="col-md-8 text-md-start">
+                        <h4 class="mb-0 fw-bold">Wedding Functions to Birthday Parties, We offer full Events Management!</h4>
+                    </div>
+                    <div class="col-md-4">
+                        <button class="btn btn-orange btn-lg w-100 mt-3 mt-md-0">REQUEST ESTIMATE</button>
+                    </div>
                 </div>
-
-                <div class="col-md-6 content-box">
-                    <h3 class="event-title text-gradient">{{ event.title }}</h3>
-                    <p class="event-location">{{ event.location }}</p>
-                    <p class="event-date">{{ event.event_date }}</p>
-                    <p class="event-desc">{{ event.description }}</p>
-                </div>
-
-            {% else %}
-
-                <!-- Image Right -->
-                <div class="col-md-6 content-box">
-                    <h3 class="event-title text-gradient">{{ event.title }}</h3>
-                    <p class="event-location">{{ event.location }}</p>
-                    <p class="event-date">{{ event.event_date }}</p>
-                    <p class="event-desc">{{ event.description }}</p>
-                </div>
-
-                <div class="col-md-6">
-                    <!-- <div class="image-wrapper">
-                        <img src="{{ event.image.url }}" class="section-img">
-                    </div> -->
-                    <div id="ourCarousel{{ forloop.counter }}" 
-     class="carousel slide image-wrapper" 
-     data-bs-ride="carousel" 
-     data-bs-interval="2500">
-
-    <div class="carousel-inner">
-
-        {% for e in featured_events %}
-        <div class="carousel-item {% if forloop.first %}active{% endif %}">
-            <img src="{{ e.image.url }}" class="section-img">
-        </div>
-        {% endfor %}
-
-    </div>
-
-</div>
-
-                </div>
-
-            {% endif %}
-
-        </div>
-        {% endfor %}
-
-    </div>
-</section>
-
-
- <!--  -->
-    <!-- 🔥 Featured Slider -->
-<section class="container my-3">
-
-    <h2 class="text-center fw-bold mb-4 text-gradient2">Highlights</h2>
-
-    <div id="eventCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel" data-bs-interval="2500">
-
-        <div class="carousel-inner rounded-4 shadow-lg">
-
-            {% for event in events|slice:":3" %}
-            <div class="carousel-item {% if forloop.first %}active{% endif %}">
-                
-                {% if event.image %}
-                <img src="{{ event.image.url }}" class="d-block w-100" style="height:450px; object-fit:cover;">
-                {% endif %}
-                
-                <div class="carousel-caption bg-dark bg-opacity-50 rounded-3 p-3">
-                    <h4>{{ event.title }}</h4>
-                    <p>{{ event.location }} | {{ event.event_date }}</p>
-                </div>
-
             </div>
-            {% endfor %}
-
         </div>
-
-        <!-- Controls -->
-        <button class="carousel-control-prev" type="button" data-bs-target="#eventCarousel" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon"></span>
-        </button>
-
-        <button class="carousel-control-next" type="button" data-bs-target="#eventCarousel" data-bs-slide="next">
-            <span class="carousel-control-next-icon"></span>
-        </button>
-
     </div>
+</div>
 
+<section class="welcome-section">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6 mb-5 mb-lg-0">
+                <img src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&q=80" class="img-fluid welcome-img" alt="Welcome">
+            </div>
+            <div class="col-lg-6 ps-lg-5">
+                <p class="text-orange fw-bold mb-1" style="color:var(--dvents-orange)">WELCOME TO EVENTS</p>
+                <h2 class="welcome-title mb-4">Making your events <span>smarter & impactful</span></h2>
+                <p>We craft unforgettable experiences tailored to elevate your brand presence and audience engagement. With years of expertise in the luxury event industry, we handle everything from concept to execution.</p>
+                <ul class="list-unstyled mt-4">
+                    <li class="mb-2"><i class="bi bi-check-circle-fill text-orange me-2"></i> Expert Planning & Coordination</li>
+                    <li class="mb-2"><i class="bi bi-check-circle-fill text-orange me-2"></i> Custom Theme Design</li>
+                    <li class="mb-2"><i class="bi bi-check-circle-fill text-orange me-2"></i> Premium Vendor Management</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- galary -->
+ <section class="py-5 bg-white">
+    <div class="container">
+        <ul class="nav gallery-nav justify-content-center mb-4">
+            <li class="nav-item"><button class="nav-link active">ALL EVENTS</button></li>
+            <li class="nav-item"><button class="nav-link">WEDDING EVENTS</button></li>
+            <li class="nav-item"><button class="nav-link">BIRTHDAY PARTIES</button></li>
+            <li class="nav-item"><button class="nav-link">CORPORATE EVENTS</button></li>
+            <li class="nav-item"><button class="nav-link">SOCIAL MEETINGS</button></li>
+        </ul>
+        <div class="row g-0">
+            <div class="col-md-3 gallery-item" data-aos="zoom-in"><img src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?q=80&w=500"></div>
+            <div class="col-md-3 gallery-item" data-aos="zoom-in" data-aos-delay="100"><img src="https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?q=80&w=500"></div>
+            <div class="col-md-3 gallery-item" data-aos="zoom-in" data-aos-delay="200"><img src="https://images.unsplash.com/photo-1530103043960-ef38714abb15?q=80&w=500"></div>
+            <div class="col-md-3 gallery-item" data-aos="zoom-in" data-aos-delay="300"><img src="https://images.unsplash.com/photo-1470225620780-dba8ba36b745?q=80&w=500"></div>
+        </div>
+    </div>
 </section>
 
-<!-- 🔥 FEATURED EVENTS -->
 <section class="py-5 bg-light">
     <div class="container">
-
-        <h2 class="text-center mb-5 fw-bold text-gradient2">Featured Events</h2>
-
+        <div class="text-center mb-5">
+            <p class="italic-sub" style="color:var(--dvents-grey)">Our Recent Work</p>
+            <h2 class="fw-bold">LATEST EVENTS</h2>
+            <div style="width: 50px; height: 3px; background: var(--dvents-orange); margin: 10px auto;"></div>
+        </div>
         <div class="row">
-
-            {% for event in featured_events %}
-            <div class="col-md-4 mb-4">
-                <div class="card shadow-sm border-0 rounded-4">
-
-                    {% if event.image %}
-                    <img src="{{ event.image.url }}" class="card-img-top rounded-top-4">
-                    {% endif %}
-
-                    <div class="card-body">
-                        <h5 class="fw-bold">{{ event.title }}</h5>
-                        <p class="text-muted">{{ event.location }}</p>
-                        <p>{{ event.event_date }}</p>
+            {% for event in events|slice:":6" %}
+            <div class="col-md-4">
+                <div class="card event-card">
+                    <img src="{{ event.image.url }}" class="card-img-top">
+                    <div class="card-body px-0">
+                        <span class="text-muted small">{{ event.event_date|date:"F d, Y" }}</span>
+                        <h5 class="card-title">{{ event.title }}</h5>
+                        <p class="small">{{ event.location }}</p>
                     </div>
-
                 </div>
             </div>
             {% endfor %}
-
         </div>
     </div>
 </section>
-<!-- 🔥 FOOTER -->
-<footer class="bg-dark text-white text-center py-3">
-    © 2026 EventPro | Built By Sandhya
-</footer>
+<!-- Team -->
+ <section class="team-section">
+    <div class="team-overlay"></div>
+    <div class="container position-relative text-center">
+        <h2 class="text-white mb-2">DVENTS <span class="text-orange">TEAM</span></h2>
+        <p class="small mb-5 italic-sub text-white-50">We make your events smart & impactful</p>
+        
+        <div class="row justify-content-center">
+            <div class="col-md-5 mb-4" data-aos="fade-right">
+                <div class="d-flex align-items-center text-start">
+                    <img src="https://randomuser.me/api/portraits/men/32.jpg" class="team-img me-4">
+                    <div>
+                        <h5 class="text-white mb-1"><span class="team-line"></span> CHARLES HASMAN</h5>
+                        <p class="text-orange small fw-bold">Founder & Director</p>
+                        <p class="small text-white-50">Expert in corporate event strategy and logistics management with 15+ years experience.</p>
+                        <div class="text-white-50"><i class="bi bi-facebook me-2"></i> <i class="bi bi-twitter me-2"></i> <i class="bi bi-instagram"></i></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-5 mb-4" data-aos="fade-left">
+                <div class="d-flex align-items-center text-start">
+                    <img src="https://randomuser.me/api/portraits/women/44.jpg" class="team-img me-4">
+                    <div>
+                        <h5 class="text-white mb-1"><span class="team-line"></span> ANNA SYDNEY</h5>
+                        <p class="text-orange small fw-bold">Events Manager</p>
+                        <p class="small text-white-50">Creative lead specializing in high-end wedding aesthetics and personalized décor.</p>
+                        <div class="text-white-50"><i class="bi bi-facebook me-2"></i> <i class="bi bi-twitter me-2"></i> <i class="bi bi-instagram"></i></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
+<footer class="main-footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3 col-md-6 mb-4">
+                <h5 class="footer-title">ABOUT EVENTS</h5>
+                <p>The Events Specialists! We create memories that last longer through personalized and professional management.</p>
+                <button class="btn btn-sm btn-light rounded-0 px-3">READ MORE</button>
+            </div>
+            <div class="col-lg-3 col-md-6 mb-4">
+                <h5 class="footer-title">KEEP IN TOUCH</h5>
+                <p><i class="bi bi-geo-alt text-orange me-2"></i> 38-2 Hilton Street, California, USA</p>
+                <p><i class="bi bi-telephone text-orange me-2"></i> (+01) 123 456 7890</p>
+                <p><i class="bi bi-envelope text-orange me-2"></i> info@events.org</p>
+            </div>
+            <div class="col-lg-3 col-md-6 mb-4">
+                <h5 class="footer-title">EVENTS GALLERY</h5>
+                <div class="row g-2 footer-gallery">
+                    <div class="col-4"><img src="https://images.unsplash.com/photo-1519167758481-83f550bb49b3?q=80&w=150"></div>
+                    <div class="col-4"><img src="https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?q=80&w=150"></div>
+                    <div class="col-4"><img src="https://images.unsplash.com/photo-1530103043960-ef38714abb15?q=80&w=150"></div>
+                    <div class="col-4"><img src="https://images.unsplash.com/photo-1470225620780-dba8ba36b745?q=80&w=150"></div>
+                    <div class="col-4"><img src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?q=80&w=150"></div>
+                    <div class="col-4"><img src="https://images.unsplash.com/photo-1504196606672-aef5c9cefc92?q=80&w=150"></div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 mb-4">
+                <h5 class="footer-title">QUICK LINKS</h5>
+                <ul class="quick-links">
+                    <li><a href="#"><i class="bi bi-caret-right me-2"></i> Our Services</a></li>
+                    <li><a href="#"><i class="bi bi-caret-right me-2"></i> Our Team</a></li>
+                    <li><a href="#"><i class="bi bi-caret-right me-2"></i> News Blog</a></li>
+                    <li><a href="#"><i class="bi bi-caret-right me-2"></i> Client List</a></li>
+                </ul>
+            </div>
+        </div>
+        <hr class="border-secondary mt-5">
+        <div class="d-flex justify-content-between small">
+            <p>© 2026 Events - The Events Specialists. All Rights Reserved.</p>
+            <div class="d-flex gap-3">
+                <i class="bi bi-facebook"></i><i class="bi bi-twitter"></i><i class="bi bi-instagram"></i><i class="bi bi-youtube"></i>
+            </div>
+        </div>
+    </div>
+</footer>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>AOS.init({ duration: 1000, once: true });</script>
 </body>
 </html>

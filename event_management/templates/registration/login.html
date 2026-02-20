@@ -1,84 +1,299 @@
 {% load static %}
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Login</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Login | Events</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+<style>
+:root { 
+    --dvents-orange: #ff4e00; 
+    --dvents-dark: #1a1a1a; 
+    --dvents-grey: #666; 
+}
+
+body {
+    font-family: 'Open Sans', sans-serif;
+    margin: 0;
+}
+
+/* ---------------- NAVBAR (Same as Landing) ---------------- */
+.navbar { background: white; border-bottom: 1px solid #eee; }
+.nav-link { 
+    color: var(--dvents-dark) !important; 
+    font-weight: 700; 
+    font-size: 0.85rem; 
+    letter-spacing: 1px; 
+    margin: 0 10px; 
+}
+.nav-link:hover { color: var(--dvents-orange) !important; }
+
+/* ---------------- HERO BACKGROUND ---------------- */
+.login-hero {
+    height: 100vh;
+    background: url("{% static 'images/ev12.jpg' %}") center/cover no-repeat;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+/* Dark overlay like landing */
+.login-hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        to right,
+        rgba(0,0,0,0.85),
+        rgba(0,0,0,0.5)
+    );
+}
+
+/* Floating icons */
+.floating-icon-1 {
+    position: absolute;
+    top: 15%;
+    left: 10%;
+    width: 60px;
+    animation: float 3s ease-in-out infinite;
+    z-index: 3;
+}
+
+.floating-icon-2 {
+    position: absolute;
+    bottom: 20%;
+    right: 12%;
+    width: 60px;
+    animation: float 4s ease-in-out infinite reverse;
+    z-index: 3;
+}
+.floating-icon-right {
+    position: absolute;
+    bottom: 20%;
+    right: 12%;
+    width: 60px;
+    animation: float 4s ease-in-out infinite reverse;
+    z-index: 3;
+}
+@keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-20px); }
+    100% { transform: translateY(0px); }
+}
+
+/* ---------------- LOGIN CARD ---------------- */
+.login-card {
+    position: relative;
+    z-index: 5;
+    background: rgba(255,255,255,0.95);
+    padding: 40px;
+    border-radius: 15px;
+    width: 100%;
+    max-width: 420px;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+}
+
+.login-card h2 {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 800;
+    margin-bottom: 10px;
+}
+
+.finput {
+    border-radius: 10px;
+    padding: 12px;
+    background: #f8f9fa;
+}
+
+.btn-orange {
+    background: var(--dvents-orange);
+    color: white;
+    border-radius: 25px;
+    padding: 12px;
+    font-weight: 700;
+    border: none;
+    transition: 0.3s;
+}
+
+.btn-orange:hover {
+    background: #e64600;
+    transform: translateY(-2px);
+    color: white;
+}
+/* EVENT CAROUSEL CARD */
+.event-carousel-card {
+    background: rgba(0,0,0,0.6);
+    padding: 30px;
+    border-radius: 20px;
+    backdrop-filter: blur(6px);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+}
+
+.carousel-img {
+    height: 350px;
+    object-fit: cover;
+}
+
+/* Responsive */
+@media (max-width: 992px) {
+    .event-carousel-card {
+        margin-bottom: 30px;
+    }
+}
+
+</style>
 </head>
-<!-- <body class="login-page">
 
-<div class="login-card">
-        <a class="navbar-brand fw-bold d-flex align-items-center" href="/">
-        <span class="text-gradient">EventPro</span>
-        <span class="me-2">🎉</span>
-</a>
-    <h3 class="text-center mb-4">Login</h3>
+<body>
 
-    <form method="post">
-        {% csrf_token %}
-         {% if form.non_field_errors %}
-        <div class="alert alert-danger">
-            {{ form.non_field_errors }}
-        </div>
-    {% endif %}
-        <input type="text" name="username" placeholder="Username" class="form-control mb-3">
-        <input type="password" name="password" placeholder="Password" class="form-control mb-3">
-        <button class="btn btn-gradient w-100">Login</button>
-    </form>
-</div>
-
-</body> -->
-<body class="login-split">
-
-<div class="login-wrapper">
-
-    <!-- LEFT SIDE -->
-    <div class="login-left">
-        <div class="overlay"></div>
-        <div class="left-content">
-            <h1 class="brand-title text-gradient">EventPro 🎉</h1>
-            <p class="brand-tagline">
-                Manage Events.<br>
-                Empower Teams.<br>
-                Deliver Experiences.
-            </p>
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg sticky-top">
+    <div class="container">
+        <a class="navbar-brand" href="/">
+            <img src="https://demo.ovatheme.com/dvents/wp-content/uploads/2017/06/logo.png" height="40">
+        </a>
+        <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item"><a class="nav-link" href="/">HOME</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">SERVICES</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">EVENTS</a></li>
+                <li class="nav-item"><a class="nav-link text-danger" href="{% url 'login' %}">LOGIN</a></li>
+            </ul>
         </div>
     </div>
+</nav>
 
-    <!-- RIGHT SIDE -->
-    <div class="login-right">
-        <div class="login-card-modern">
+<!-- HERO SECTION -->
+<section class="login-hero">
 
-            <h3 class="mb-4 text-center">Welcome Back</h3>
+    <img src="{% static 'images/ev-icon2.png' %}" class="floating-icon-1">
+    <img src="{% static 'images/ev-icon1.png' %}" class="floating-icon-2">
 
-            <form method="post">
-                {% csrf_token %}
+    <div class="container position-relative" style="z-index:5;">
+        <div class="row align-items-center justify-content-between">
 
-                {% if form.non_field_errors %}
-                    <div class="alert alert-danger">
-                        {{ form.non_field_errors }}
+            <!-- LEFT SIDE : EVENT CAROUSEL CARD -->
+            <div class="col-lg-6 mb-4 mb-lg-0">
+
+                <!-- <div class="event-carousel-card"> -->
+
+                    <h3 class="text-white fw-bold mb-3">Featured Events</h3>    
+                    <!-- <img src="{% static 'images/ev-icon2.png' %}" class="floating-icon-1"> -->
+
+                    <div id="loginCarousel" 
+                         class="carousel slide"
+                         data-bs-ride="carousel"
+                         data-bs-interval="2500">
+
+                        <div class="carousel-inner rounded-4 overflow-hidden">
+
+                            {% for event in featured_events %}
+                            <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                                <img src="{{ event.image.url }}"
+                                     class="d-block w-100 carousel-img">
+                            </div>
+                            {% endfor %}
+
+                        </div>
                     </div>
-                {% endif %}
 
-                <input type="text" name="username"
-                       placeholder="Username"
-                       class="form-control mb-3">
+                    <!-- <p class="text-white-50 mt-3 small">
+                        Experience unforgettable moments with EVENTS.
+                    </p> -->
 
-                <input type="password" name="password"
-                       placeholder="Password"
-                       class="form-control mb-3">
+                <!-- </div> -->
 
-                <button class="btn btn-gradient w-100">
-                    Login
-                </button>
-            </form>
+            </div>
+
+
+            <!-- RIGHT SIDE : LOGIN CARD -->
+            <div class="col-lg-5">
+
+                <div class="login-card text-center">
+
+                    <h2>Welcome Back</h2>
+                    <p class="text-muted mb-4">Login to continue managing your events</p>
+
+                     <form method="post" id="loginForm">
+                        {% csrf_token %}
+
+                        {% if form.non_field_errors %}
+                            <div class="alert alert-danger small">
+                                {{ form.non_field_errors }}
+                            </div>
+                        {% endif %}
+
+                        <div class="mb-3 text-start">
+                            <label class="form-label small fw-bold">Username</label>
+                            <input type="text" name="username" class="form-control finput">
+                        </div>
+
+                        <div class="mb-4 text-start">
+                            <label class="form-label small fw-bold">Password</label>
+                            <input type="password" name="password" class="form-control finput">
+                        </div>
+
+                        <button class="btn btn-orange w-100 mb-3">Login</button>
+                         <!-- <img src="{% static 'images/ev-icon1.png' %}" class="floating-icon-right"> -->
+
+                        <p class="small">
+                            Don't have an account?
+                            <a href="{% url 'register' %}" 
+                               class="fw-bold text-decoration-none"
+                               style="color: var(--dvents-orange);">
+                                Register here
+                            </a>
+                        </p>
+
+                    </form>
+
+                </div>
+
+            </div>
 
         </div>
     </div>
 
-</div>
+</section>
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const form = document.getElementById("loginForm");
+        form.addEventListener("submit", function (e) {
+            let isValid = true;
+            const inputs = form.querySelectorAll(".finput");
+            
+            inputs.forEach(input => {
+                input.classList.remove("is-invalid");
+                const existingError = input.parentNode.querySelector(".text-danger");
+                if (existingError) existingError.remove();
+
+                if (input.value.trim() === "") {
+                    input.classList.add("is-invalid");
+                    const error = document.createElement("div");
+                    error.classList.add("text-danger", "small", "mt-1");
+                    error.innerText = (input.name.charAt(0).toUpperCase() + input.name.slice(1)) + " is required";
+                    input.after(error);
+                    isValid = false;
+                }
+            });
+
+            if (!isValid) e.preventDefault();
+        });
+    });
+</script>
 
 </body>
-
 </html>

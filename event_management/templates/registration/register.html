@@ -1,73 +1,299 @@
 {% load static %}
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Register | EventPro</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Register | EVENTS</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+<style>
+:root { 
+    --dvents-orange: #ff4e00; 
+    --dvents-dark: #1a1a1a; 
+    --dvents-grey: #666; 
+}
+
+body {
+    font-family: 'Open Sans', sans-serif;
+    margin: 0;
+}
+
+/* NAVBAR */
+.navbar { background: white; border-bottom: 1px solid #eee; }
+.nav-link { 
+    color: var(--dvents-dark) !important; 
+    font-weight: 700; 
+    font-size: 0.85rem; 
+    letter-spacing: 1px; 
+}
+.nav-link:hover { color: var(--dvents-orange) !important; }
+
+/* HERO BACKGROUND */
+.register-hero {
+    min-height: 100vh;
+    background: url("{% static 'images/ev12.jpg' %}") center/cover no-repeat;
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.register-hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to right,
+        rgba(0,0,0,0.85),
+        rgba(0,0,0,0.65)
+    );
+}
+
+/* FLOATING ICONS */
+.floating-icon-top {
+    position: absolute;
+    top: 8%;
+    left: 10%;
+    width: 60px;
+    animation: float 4s infinite ease-in-out;
+    z-index: 5;
+}
+
+.floating-icon-left {
+    position: absolute;
+    bottom: 20%;
+    left: 5%;
+    width: 60px;
+    animation: float 5s infinite ease-in-out reverse;
+    z-index: 5;
+}
+.floating-icon-right {
+    position: absolute;
+    bottom: 20%;
+    right: 5%;
+    width: 60px;
+    animation: float 5s infinite ease-in-out reverse;
+    z-index: 5;
+}
+
+@keyframes float {
+    0%,100% { transform: translateY(0); }
+    50% { transform: translateY(-15px); }
+}
+
+/* CONTENT WRAPPER */
+.hero-content {
+    position: relative;
+    z-index: 10;
+    width: 100%;
+}
+
+/* LEFT SIDE */
+.left-section {
+    color: white;
+    padding: 40px;
+}
+
+.left-section h1 {
+    font-family: 'Montserrat';
+    font-weight: 800;
+    font-size: 2.8rem;
+}
+
+.left-section p {
+    opacity: 0.85;
+}
+
+/* FEATURE CARDS */
+.event-feature {
+    background: rgba(255,255,255,0.12);
+    backdrop-filter: blur(6px);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 15px;
+    padding: 20px;
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+    transition: 0.3s;
+}
+
+.event-feature:hover {
+    transform: translateY(-5px);
+    background: rgba(255,255,255,0.25);
+}
+
+.event-icon {
+    background: var(--dvents-orange);
+    color: white;
+    width: 45px;
+    height: 45px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 15px;
+}
+
+/* REGISTER CARD */
+.register-card {
+    background: rgba(255,255,255,0.97);
+    padding: 45px;
+    border-radius: 20px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+}
+
+.register-card h2 {
+    font-family: 'Montserrat';
+    font-weight: 800;
+}
+
+.finput {
+    border-radius: 12px;
+    padding: 12px;
+    background: #f8f9fa;
+    border: 1px solid #e9ecef;
+}
+
+.btn-orange {
+    background: var(--dvents-orange);
+    color: white;
+    border-radius: 30px;
+    padding: 12px;
+    font-weight: 700;
+    border: none;
+    transition: 0.3s;
+}
+
+.btn-orange:hover {
+    background: #e64600;
+    transform: translateY(-2px);
+}
+
+/* Responsive */
+@media (max-width: 992px) {
+    .left-section {
+        text-align: center;
+        margin-bottom: 40px;
+    }
+}
+</style>
 </head>
 
-<body class="login-page">
+<body>
 
-<div class="login-card">
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg sticky-top">
+<div class="container">
+    <a class="navbar-brand" href="/">
+        <img src="https://demo.ovatheme.com/dvents/wp-content/uploads/2017/06/logo.png" height="40">
+    </a>
+    <div class="ms-auto">
+        <a href="{% url 'landing' %}" class="nav-link fw-bold">HOME</a>
+    </div>
+</div>
+</nav>
 
-    <h2 class="text-center mb-4 fw-bold">Create Account</h2>
+<section class="register-hero">
 
-    <form method="POST" novalidate>
-        {% csrf_token %}
+<!-- Floating Icons -->
+<img src="{% static 'images/ev-icon1.png' %}" class="floating-icon-top">
+<img src="{% static 'images/ev-icon2.png' %}" class="floating-icon-left">
 
-        <!-- Username -->
-        <div class="mb-3">
-            <label class="form-label">Username</label>
-            <input type="text"
-                   name="username"
-                   value="{{ form.username.value|default:'' }}"
-                   class="form-control {% if form.username.errors %}is-invalid{% endif %}">
-            {% for error in form.username.errors %}
-                <div class="invalid-feedback">
-                    {{ error }}
-                </div>
-            {% endfor %}
+<div class="container hero-content">
+<div class="row align-items-center">
+
+    <!-- LEFT CONTENT -->
+    <div class="col-lg-6 left-section">
+        <h1>Create Your Account 🚀</h1>
+        <p class="mb-4">Start managing unforgettable events with professional tools.</p>
+
+        <div class="event-feature">
+            <div class="event-icon"><i class="bi bi-calendar-check"></i></div>
+            <div>
+                <h6 class="mb-1 fw-bold">Track Your Events</h6>
+                <small>Organize all your bookings in one dashboard.</small>
+            </div>
         </div>
 
-        <!-- Password -->
-        <div class="mb-3">
-            <label class="form-label">Password</label>
-            <input type="password"
-                   name="password1"
-                   class="form-control {% if form.password1.errors %}is-invalid{% endif %}">
-            {% for error in form.password1.errors %}
-                <div class="invalid-feedback">
-                    {{ error }}
-                </div>
-            {% endfor %}
+        <div class="event-feature">
+            <div class="event-icon"><i class="bi bi-people"></i></div>
+            <div>
+                <h6 class="mb-1 fw-bold">Manage Teams</h6>
+                <small>Assign roles & collaborate smoothly.</small>
+            </div>
         </div>
 
-        <!-- Confirm Password -->
-        <div class="mb-3">
-            <label class="form-label">Confirm Password</label>
-            <input type="password"
-                   name="password2"
-                   class="form-control {% if form.password2.errors %}is-invalid{% endif %}">
-            {% for error in form.password2.errors %}
-                <div class="invalid-feedback">
-                    {{ error }}
-                </div>
-            {% endfor %}
+        <div class="event-feature">
+            <div class="event-icon"><i class="bi bi-graph-up"></i></div>
+            <div>
+                <h6 class="mb-1 fw-bold">Event Insights</h6>
+                <small>Real-time analytics & engagement data.</small>
+            </div>
         </div>
+    </div>
 
-        <button type="submit" class="btn btn-primary w-100 py-2">
-            Register
-        </button>
+    <!-- REGISTER FORM -->
+    <div class="col-lg-5 offset-lg-1">
+        <div class="register-card text-center">
 
-        <p class="text-center mt-3">
-            Already have an account?
-            <a href="{% url 'login' %}">Login</a>
-        </p>
+            <h2 class="mb-3">Register</h2>
+            <!-- <img src="{% static 'images/ev-icon1.png' %}" class="floating-icon-right"> -->
+            <p class="text-muted mb-4">Join EVENTS today</p>
 
-    </form>
+            <form method="POST">
+                {% csrf_token %}
+
+                <div class="mb-3 text-start">
+                    <label class="form-label small fw-bold">Username</label>
+                    <input type="text" name="username"
+                        value="{{ form.username.value|default:'' }}"
+                        class="form-control finput {% if form.username.errors %}is-invalid{% endif %}">
+                    {% for error in form.username.errors %}
+                        <div class="invalid-feedback">{{ error }}</div>
+                    {% endfor %}
+                </div>
+
+                <div class="mb-3 text-start">
+                    <label class="form-label small fw-bold">Password</label>
+                    <input type="password" name="password1"
+                        class="form-control finput {% if form.password1.errors %}is-invalid{% endif %}">
+                    {% for error in form.password1.errors %}
+                        <div class="invalid-feedback">{{ error }}</div>
+                    {% endfor %}
+                </div>
+
+                <div class="mb-4 text-start">
+                    <label class="form-label small fw-bold">Confirm Password</label>
+                    <input type="password" name="password2"
+                        class="form-control finput {% if form.password2.errors %}is-invalid{% endif %}">
+                    {% for error in form.password2.errors %}
+                        <div class="invalid-feedback">{{ error }}</div>
+                    {% endfor %}
+                </div>
+
+                <button type="submit" class="btn btn-orange w-100 mb-3">
+                    Create Account
+                </button>
+
+                <p class="small">
+                    Already have an account?
+                    <a href="{% url 'login' %}" class="fw-bold text-decoration-none"
+                       style="color: var(--dvents-orange);">
+                        Login
+                    </a>
+                </p>
+
+            </form>
+
+        </div>
+    </div>
 
 </div>
+</div>
+</section>
 
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

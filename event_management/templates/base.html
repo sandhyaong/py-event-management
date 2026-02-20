@@ -1,10 +1,182 @@
 {% load static %}
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Event Admin</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EventPro | Admin Dashboard</title>
+    
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary-gradient: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
+            --sidebar-bg: #0f172a;
+            --sidebar-hover: rgba(255, 255, 255, 0.08);
+            --content-bg: #f1f5f9;
+            --text-main: #1e293b;
+            --accent: #8b5cf6;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--content-bg);
+            color: var(--text-main);
+            overflow-x: hidden;
+        }
+
+        /* --- Sidebar Styling --- */
+        .sidebar {
+            width: 280px;
+            height: 100vh;
+            background: var(--sidebar-bg);
+            position: fixed;
+            left: 0;
+            top: 0;
+            z-index: 1000;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            flex-direction: column;
+            box-shadow: 10px 0 30px rgba(0,0,0,0.1);
+        }
+
+        .brand-wrapper {
+            padding: 2rem 1.5rem;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .brand-name {
+            font-size: 1.5rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            color: #fff;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .brand-dot {
+            height: 10px;
+            width: 10px;
+            background: var(--primary-gradient);
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        /* Navigation Links */
+        .nav-container {
+            padding: 1.5rem 0;
+            flex-grow: 1;
+        }
+
+        .nav-label {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+            color: #64748b;
+            padding: 0 1.5rem 0.75rem;
+            font-weight: 700;
+        }
+
+        .menu-item {
+            position: relative;
+            padding: 0.85rem 1.5rem;
+            color: #94a3b8;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            font-weight: 500;
+            transition: 0.2s all;
+            border-left: 4px solid transparent;
+        }
+
+        .menu-item i {
+            width: 28px;
+            font-size: 1.2rem;
+            transition: 0.2s;
+        }
+
+        .menu-item:hover {
+            background: var(--sidebar-hover);
+            color: #fff;
+            border-left: 4px solid var(--accent);
+        }
+
+        .menu-item:hover i {
+            color: var(--accent);
+            transform: scale(1.1);
+        }
+
+        /* --- Main Content Area --- */
+        .main-wrapper {
+            margin-left: 280px;
+            width: calc(100% - 280px);
+            min-height: 100vh;
+        }
+
+        /* Top Bar */
+        .top-navbar {
+            height: 70px;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid #e2e8f0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 999;
+        }
+
+        /* Custom Cards for Content */
+        .content-card {
+            background: #fff;
+            border-radius: 16px;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            padding: 1.5rem;
+        }
+
+        /* Logout Button Customization */
+        .logout-btn {
+            background: rgba(239, 68, 68, 0.1);
+            color: #ef4444 !important;
+            margin: 1rem 1.5rem;
+            border-radius: 10px;
+            border: none;
+            width: calc(100% - 3rem);
+            justify-content: center;
+        }
+
+        .logout-btn:hover {
+            background: #ef4444 !important;
+            color: #fff !important;
+            border-left: none !important;
+        }
+
+        /* User Profile Badge */
+        .user-badge {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 6px 14px;
+            background: #fff;
+            border: 1px solid #e2e8f0;
+            border-radius: 50px;
+        }
+
+        /* Scrollbar Styling */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+        
+    </style>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="{% static 'js/ajax.js' %}"></script>
     <script src="{% static 'js/apiHelper.js' %}"></script>
@@ -12,47 +184,82 @@
 <body>
 
 <div class="d-flex">
+    <aside class="sidebar">
+        <div class="brand-wrapper">
+            <a class="brand-name" href="/">
+                <span class="brand-dot"></span>
+                <span>Event Pro</span>
+            </a>
+        </div>
 
-    <!-- Sidebar -->
-    <div class="sidebar p-3">
-            <a class="navbar-brand fw-bold d-flex align-items-center" href="/">
-        <span class="text-gradient1">EventPro</span>
-        <span class="me-2">🎉</span>
-</a>
-        <h4 class="text-white">Event Admin</h4>
-        <hr>
-        <a href="{% url 'event_list' %}" class="menu-item">All Events</a>
-        {% if request.user.user_role.role == "ADMIN" %}
-        <a href="{% url 'event_add' %}" class="menu-item">Add Event</a>
-          {% endif %}
-        <!-- Role -->
-        {% if request.user.user_role.role == "ADMIN" %}
+        <nav class="nav-container">
+            <div class="nav-label">Management</div>
+            
+            <a href="{% url 'event_list' %}" class="menu-item">
+                <i class="fa-solid fa-layer-group"></i>
+                <span>All Events</span>
+            </a>
+
+            {% if request.user.user_role.role == "ADMIN" %}
+            <a href="{% url 'event_add' %}" class="menu-item">
+                <i class="fa-solid fa-calendar-plus"></i>
+                <span>Create Event</span>
+            </a>
+            
+            <div class="nav-label mt-4">Administrative</div>
             <a href="{% url 'manage_roles' %}" class="menu-item">
-                Manage Roles
+                <i class="fa-solid fa-user-shield"></i>
+                <span>Role Permissions</span>
             </a>
             {% endif %}
+        </nav>
 
-        <!-- <a href="{% url 'logout' %}" class="menu-item">Logout</a> -->
-             <div class="mt-auto">
-        <hr class="bg-light">
+        <div class="sidebar-footer">
+            <form method="POST" action="{% url 'logout' %}">
+                {% csrf_token %}
+                <button type="submit" class="menu-item logout-btn">
+                    <i class="fa-solid fa-power-off me-2"></i> Logout
+                </button>
+            </form>
+        </div>
+    </aside>
 
-        <form method="POST" action="{% url 'logout' %}">
-            {% csrf_token %}
-            <button type="submit"
-                    class="menu-item btn btn-link text-white text-start p-0">
-                Logout
-            </button>
-        </form>
+    <div class="main-wrapper">
+        <header class="top-navbar">
+            <div class="d-flex align-items-center">
+                <h5 class="mb-0 fw-bold">Admin Console</h5>
+            </div>
+            
+            <div class="user-badge">
+                <div class="text-end">
+                    <p class="mb-0 fw-semibold" style="font-size: 0.85rem;">{{ request.user.username }}</p>
+                    <small class="text-muted" style="font-size: 0.7rem;">{{ request.user.user_role.role }}</small>
+                </div>
+                <img src="https://ui-avatars.com/api/?name={{ request.user.username }}&background=6366f1&color=fff" 
+                     class="rounded-circle" width="32" height="32" alt="Avatar">
+            </div>
+        </header>
+
+        <main class="p-4">
+            <div class="container-fluid">
+                <!-- <nav aria-label="breadcrumb" class="mb-4">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="#" class="text-decoration-none text-muted">Dashboard</a></li>
+                        <li class="breadcrumb-item active fw-semibold" aria-current="page">Overview</li>
+                    </ol>
+                </nav> -->
+
+                <div class="content-card">
+                    {% block content %}
+                    <div class="text-center py-5">
+                        <h2 class="text-muted">Welcome to the Command Center</h2>
+                        <p>Select a menu item from the sidebar to begin.</p>
+                    </div>
+                    {% endblock %}
+                </div>
+            </div>
+        </main>
     </div>
-
-    </div>
-
-    <!-- Main Content -->
-    <div class="content p-4">
-        {% block content %}
-        {% endblock %}
-    </div>
-
 </div>
 
 </body>
