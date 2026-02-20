@@ -199,13 +199,25 @@
                 <i class="fa-solid fa-layer-group"></i>
                 <span>All Events</span>
             </a>
+            {% if request.user.user_role.role == "VIEWER" %}
+                <a href="{% url 'my_bookings' %}" class="menu-item">
+                    <i class="fa-solid fa-ticket"></i>
+                    <span>My Bookings</span>
+                </a>
+                {% endif %}
 
+                {% if request.user.user_role.role == "ADMIN" %}
+                <a href="{% url 'all_bookings' %}" class="menu-item">
+                    <i class="fa-solid fa-ticket"></i>
+                    <span>All Bookings</span>
+                </a>
+            {% endif %}
             {% if request.user.user_role.role == "ADMIN" %}
             <a href="{% url 'event_add' %}" class="menu-item">
                 <i class="fa-solid fa-calendar-plus"></i>
                 <span>Create Event</span>
             </a>
-            
+  
             <div class="nav-label mt-4">Administrative</div>
             <a href="{% url 'manage_roles' %}" class="menu-item">
                 <i class="fa-solid fa-user-shield"></i>

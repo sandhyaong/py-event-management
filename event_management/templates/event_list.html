@@ -81,8 +81,14 @@
                     <p class="text-muted small mb-4">
                         <i class="bi bi-calendar3 me-2"></i>{{ event.event_date|date:"M d, Y" }}
                     </p>
-
+                    
                     <div class="action-buttons mt-3">
+                    <a href="{% url 'book_event' event.id %}" 
+                        class="btn book-btn flex-grow-1">
+                            <i class="bi bi-ticket-perforated me-1"></i>
+                            Book Now
+                        </a>
+
                         {% if request.user.user_role.role != "VIEWER" %}
                     <a href="{% url 'event_edit' event.id %}" 
                     class="btn edit-btn flex-grow-1">
@@ -202,6 +208,25 @@
 
 .delete-btn:hover {
     background: #dc2626;
+    color: #fff;
+    transform: translateY(-2px);
+}
+/* booking */
+.book-btn {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    color: white;
+    font-weight: 500;
+    border-radius: 10px;
+    padding: 8px 14px;
+    border: none;
+    transition: 0.25s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.book-btn:hover {
+    background: linear-gradient(135deg, #059669 0%, #047857 100%);
     color: #fff;
     transform: translateY(-2px);
 }

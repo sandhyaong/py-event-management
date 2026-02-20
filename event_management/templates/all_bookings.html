@@ -1,0 +1,103 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="container">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2 class="fw-bold mb-1">All Bookings</h2>
+            <p class="text-muted small mb-0">Manage and monitor all user reservations</p>
+        </div>
+    </div>
+
+    <div class="card border-0 shadow-sm rounded-4">
+        <div class="card-body p-4">
+
+            <div class="table-responsive">
+                <table class="table align-middle">
+                    <thead class="border-bottom">
+                        <tr>
+                            <th>User</th>
+                            <th>Event</th>
+                            <th>Tickets</th>
+                            <th>Status</th>
+                            <th>Booked On</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for booking in bookings %}
+                        <tr>
+                            <td>
+                                <strong>{{ booking.user.username }}</strong>
+                            </td>
+
+                            <td>{{ booking.event.title }}</td>
+
+                            <td>{{ booking.number_of_tickets }}</td>
+                            <td>
+                                {% if booking.status == "CONFIRMED" %}
+                                    <span class="badge status-confirmed">Confirmed</span>
+
+                                {% elif booking.status == "PENDING" %}
+                                    <span class="badge status-pending">Pending</span>
+
+                                    <div class="mt-2 d-flex gap-2">
+                                        <a href="{% url 'update_booking_status' booking.id 'CONFIRMED' %}" 
+                                        class="btn btn-sm btn-success">Approve</a>
+
+                                        <a href="{% url 'update_booking_status' booking.id 'CANCELLED' %}" 
+                                        class="btn btn-sm btn-danger">Reject</a>
+                                    </div>
+
+                                {% else %}
+                                    <span class="badge status-cancelled">Cancelled</span>
+                                {% endif %}
+                            </td>
+
+                            <td>
+                                {{ booking.booking_date|date:"M d, Y" }}
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="5" class="text-center py-4 text-muted">
+                                No bookings available.
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+<style>
+.status-confirmed {
+    background: #dcfce7;
+    color: #16a34a;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-weight: 500;
+}
+
+.status-pending {
+    background: #fef9c3;
+    color: #ca8a04;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-weight: 500;
+}
+
+.status-cancelled {
+    background: #fee2e2;
+    color: #dc2626;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-weight: 500;
+}
+</style>
+
+{% endblock %}

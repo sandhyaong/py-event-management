@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="container">
+
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+
+            <div class="card border-0 shadow-sm rounded-4">
+                <div class="card-body p-4">
+
+                    <h4 class="fw-bold mb-3">
+                        Book Event
+                    </h4>
+
+                    <p class="text-muted small">
+                        You are booking:
+                        <strong>{{ event.title }}</strong>
+                    </p>
+
+                    <form method="POST">
+                        {% csrf_token %}
+
+                        <div class="mb-3">
+                            <label class="form-label">Number of Tickets</label>
+                            {{ form.number_of_tickets }}
+                        </div>
+
+                        <button type="submit"
+                                class="btn w-100 rounded-pill"
+                                style="background: var(--primary-gradient); color:white;">
+                            Confirm Booking
+                        </button>
+                    </form>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}

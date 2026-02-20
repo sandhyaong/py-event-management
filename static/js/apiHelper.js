@@ -68,7 +68,11 @@ function showToast(message, success=true) {
 
     const toastContainer = document.createElement("div");
     toastContainer.className =
-        `toast align-items-center ${bgClass} border-0 show position-fixed top-0 end-0 m-3`;
+        `toast align-items-center ${bgClass} border-0 show position-fixed bottom-0 start-0 m-3`;
+        toastContainer.style.position = "fixed";
+        toastContainer.style.bottom = "10px";
+        toastContainer.style.left = "10px";
+        toastContainer.style.zIndex = "2000";
 
     toastContainer.innerHTML = `
         <div class="d-flex">

@@ -1,5 +1,5 @@
 from event_management.decorators import role_required
-from .models import Role
+from .models import Booking, Role
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 from .models import Event
@@ -11,6 +11,8 @@ from datetime import date
 from django.utils import timezone
 from django.contrib.auth.forms import UserCreationForm
 from django.http import JsonResponse
+from .forms import BookingForm
+from django.shortcuts import render, get_object_or_404, redirect
 
 
 
@@ -250,4 +252,56 @@ def register_view(request):
 def event_detail(request, id):
     event = Event.objects.get(id=id)
     return render(request, "event_detail.html", {"event": event})
-# Login
+
+
+# Booking
+@login_required
+def book_event(request, event_id):
+    event = get_object_or_404(Event, id=event_id)
+
+    if request.method == "POST":
+        form = BookingForm(request.POST)
+        if form.is_valid():
+            booking = form.save(commit=False)
+            booking.user = request.user
+            booking.event = event
+            booking.save()
+            return redirect("my_bookings")
+    else:
+        form = BookingForm()
+
+    return render(request, "book_event.html", {
+        "form": form,
+        "event": event
+    })
+
+@login_required
+def my_bookings(request):
+    bookings = request.user.bookings.all()
+    booking_count = bookings.count()
+
+    return render(request, "my_bookings.html", {
+        "bookings": bookings,
+        "booking_count": booking_count
+    })
+
+@login_required
+def all_bookings(request):
+    if request.user.user_role.role != "ADMIN":
+        return redirect("event_list")
+
+    bookings = Booking.objects.select_related("user", "event")
+    return render(request, "all_bookings.html", {"bookings": bookings})
+
+# update Booking Status
+@login_required
+def update_booking_status(request, booking_id, status):
+
+    if request.user.user_role.role != "ADMIN":
+        return redirect("event_list")
+
+    booking = Booking.objects.get(id=booking_id)
+    booking.status = status
+    booking.save()
+
+    return redirect("all_bookings")

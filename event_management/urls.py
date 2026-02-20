@@ -17,4 +17,12 @@ urlpatterns = [
     path('roles/', views.manage_roles, name='manage_roles'),
     path('register/', views.register_view, name='register'),
     path('event/<int:id>/', views.event_detail, name='event_detail'),
+    path("book/<int:event_id>/", views.book_event, name="book_event"),
+    path("my-bookings/", views.my_bookings, name="my_bookings"),
+    path("all-bookings/", views.all_bookings, name="all_bookings"),
+    path(
+    "update-booking/<int:booking_id>/<str:status>/",
+    views.update_booking_status,
+    name="update_booking_status"
+),
 ]
